@@ -1,0 +1,12 @@
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    &__item{
+        min-height: 150px;
+        max-height: 150px;
+        min-width: 200px;
+        max-width: 200px;
+        object-fit: cover;
+        object-position: top;
+    }
+}
