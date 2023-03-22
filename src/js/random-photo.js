@@ -18,6 +18,7 @@ const createImage = image => {
 };
 
 const createSavedImages = images => {
+  imageContainerElement.innerHTML = '';
   const fragment = document.createDocumentFragment();
   images.forEach(image => {
     const imageContainer = createElement('div', []);
@@ -39,18 +40,22 @@ const randomImage = async breed => {
   createImage(data.message);
 };
 
-const localImages = images => {
-  IMAGES = JSON.parse(LS.getItem('localImages'));
-  createSavedImages(IMAGES);
-};
-
 const createObjectOfImages = (button, image) => {
+  console.log(button);
   if (button.textContent === 'Unsave') {
     IMAGES.push(image);
   } else {
-    IMAGES.filter(item => item !== button.previousElementSibling.src);
+    IMAGES = IMAGES.filter(item => item !== image);
+    createSavedImages(IMAGES);
   }
+
   LS.setItem('localImages', JSON.stringify(IMAGES));
 };
-
+const localImages = () => {
+  IMAGES = JSON.parse(LS.getItem('localImages'));
+  if (!IMAGES) {
+    IMAGES = [];
+  }
+  createSavedImages(IMAGES);
+};
 export { randomImage, createObjectOfImages, localImages };
